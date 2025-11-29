@@ -26,7 +26,7 @@ public class HeaderEntity {
     @Temporal(TemporalType.DATE)
     private Date createDate;
 
-    @OneToMany(mappedBy = "header", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "header", cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
     private List<DetailEntity> detailEntityList;
 
     public Long  getVdtNo() {

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class DetailRequestDTO {
+    private Long id;
     private String bdtNo;
     private String  ndtNo;
     private Date createDate;
@@ -15,6 +16,14 @@ public class DetailRequestDTO {
     private String taxIden;
     private String branchNo;
     private String establishmentName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getBdtNo() {
         return bdtNo;

@@ -3,6 +3,7 @@ package com.pcc.Tax_BE.Service;
 import com.pcc.Tax_BE.DTO.DetailRequestDTO;
 import com.pcc.Tax_BE.Entity.DetailEntity;
 import com.pcc.Tax_BE.Entity.HeaderEntity;
+import com.pcc.Tax_BE.Repository.DetailRepository;
 import com.pcc.Tax_BE.Repository.HeaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,16 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TaxService {
     @Autowired
     private HeaderRepository headerRepository;
+    @Autowired
+    private DetailRepository detailRepository;
 
+    //create
     @Transactional
     public HeaderEntity createTax(List<DetailRequestDTO> detailRequestDTO) {
         try {
@@ -61,6 +66,95 @@ public class TaxService {
         }
     }
 
+    //update
+    @Transactional
+    public HeaderEntity updateTax(Long headerId, List<DetailRequestDTO> detailRequestDTO) {
+        try {
+            HeaderEntity existingHeader = headerRepository.findById(headerId)
+                    .orElseThrow(() -> new IllegalArgumentException("ไม่พบข้อมูล headerId = " + headerId));
+
+            for (DetailRequestDTO dto : detailRequestDTO) {
+                validate(dto);
+
+                DetailEntity detail;
+
+                if (dto.getId() != null && dto.getId() != 0) {
+                    detail = detailRepository.findById(dto.getId())
+                            .orElseThrow(() -> new IllegalArgumentException("ไม่พบ detailId = " + dto.getId()));
+                } else {
+                    detail = new DetailEntity();
+                    detail.setHeader(existingHeader);
+                    existingHeader.getDetailEntityList().add(detail);
+                }
+
+                if (!ObjectUtils.isEmpty(dto.getBdtNo())) detail.setBdtNo(dto.getBdtNo());
+                if (!ObjectUtils.isEmpty(dto.getNdtNo())) detail.setNdtNo(dto.getNdtNo());
+                if (dto.getTotalPurchase() != null) detail.setTotalPurchase(dto.getTotalPurchase());
+                if (dto.getTaxS() != null) detail.setTaxS(dto.getTaxS());
+                if (dto.getVatBR() != null) detail.setVatBR(dto.getVatBR());
+                if (dto.getVatBA() != null) detail.setVatBA(dto.getVatBA());
+                if (dto.getVatTB() != null) detail.setVatTB(dto.getVatTB());
+                if (!ObjectUtils.isEmpty(dto.getTaxIden())) detail.setTaxIden(dto.getTaxIden());
+                if (!ObjectUtils.isEmpty(dto.getBranchNo())) detail.setBranchNo(dto.getBranchNo());
+                if (!ObjectUtils.isEmpty(dto.getEstablishmentName()))
+                    detail.setEstablishmentName(dto.getEstablishmentName());
+                if (!ObjectUtils.isEmpty(dto.getCreateDate())) detail.setCreateDate(dto.getCreateDate());
+
+                detail.setUpdateBy(existingHeader.getCreateBy());
+                detail.setCreateBy(existingHeader.getCreateBy());
+                detail.setUpdateDate(new Date());
+            }
+
+            return headerRepository.save(existingHeader);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while Updating", e);
+        }
+    }
+
+    //search
+    public List<HeaderEntity> searchHeader(Long vdtNo, Date createDate) {
+        try {
+            List<HeaderEntity> result;
+            if (vdtNo == null && ObjectUtils.isEmpty(createDate) && vdtNo == 0) {
+                throw new IllegalArgumentException("Please Enter field");
+            }
+
+            if (vdtNo != null && !ObjectUtils.isEmpty(createDate) && vdtNo != 0) {
+                result = headerRepository.findByVdtNoAndCreateDate(vdtNo, createDate);
+            } else if (vdtNo != null && vdtNo != 0) {
+                result = headerRepository.findByVdtNo(vdtNo);
+            } else {
+                result = headerRepository.findByCreateDate(createDate);
+            }
+
+            if (result.isEmpty()) {
+                throw new NoSuchElementException("Not found");
+            }
+
+            return result;
+        } catch (NoSuchElementException | IllegalArgumentException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while Searching", e);
+        }
+    }
+
+    //delete detail
+    @Transactional
+    public void deleteDetail(Long detailId) {
+        DetailEntity detail = detailRepository.findById(detailId)
+                .orElseThrow(() -> new IllegalArgumentException("ไม่พบ detailId = " + detailId));
+
+        HeaderEntity header = detail.getHeader();
+        if (!ObjectUtils.isEmpty(header)) {
+            header.getDetailEntityList().remove(detail);
+        }
+        detailRepository.delete(detail);
+    }
+
+
     public void validate(DetailRequestDTO detailRequestDTO) {
         if (ObjectUtils.isEmpty(detailRequestDTO.getBdtNo()))
             throw new IllegalArgumentException("bdtNo ไม่สามารถเป็น null หรือว่างได้");
@@ -70,7 +164,7 @@ public class TaxService {
             throw new IllegalArgumentException("branchNo ไม่สามารถเป็น null หรือว่างได้");
         if (ObjectUtils.isEmpty(detailRequestDTO.getEstablishmentName()))
             throw new IllegalArgumentException("establishmentName ไม่สามารถเป็น null หรือว่างได้");
-        if (detailRequestDTO.getNdtNo() == null)
+        if (ObjectUtils.isEmpty(detailRequestDTO.getNdtNo()))
             throw new IllegalArgumentException("ndtNo ไม่สามารถเป็น null ได้");
         if (detailRequestDTO.getTotalPurchase() == null)
             throw new IllegalArgumentException("totalPurchase ไม่สามารถเป็น null ได้");
