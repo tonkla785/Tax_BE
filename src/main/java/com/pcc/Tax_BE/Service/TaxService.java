@@ -117,7 +117,7 @@ public class TaxService {
     public List<HeaderEntity> searchHeader(Long vdtNo, Date createDate) {
         try {
             List<HeaderEntity> result;
-            if (vdtNo == null && ObjectUtils.isEmpty(createDate) && vdtNo == 0) {
+            if ((vdtNo == null || vdtNo == 0) && ObjectUtils.isEmpty(createDate) ) {
                 throw new IllegalArgumentException("Please Enter field");
             }
 
