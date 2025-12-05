@@ -1,19 +1,20 @@
 package com.pcc.Tax_BE.Service;
 
 import com.pcc.Tax_BE.DTO.DetailRequestDTO;
+import com.pcc.Tax_BE.DTO.PDFRequestDTO;
 import com.pcc.Tax_BE.Entity.DetailEntity;
 import com.pcc.Tax_BE.Entity.HeaderEntity;
 import com.pcc.Tax_BE.Repository.DetailRepository;
 import com.pcc.Tax_BE.Repository.HeaderRepository;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class TaxService {
@@ -114,10 +115,11 @@ public class TaxService {
     }
 
     //search
+    @Transactional
     public List<HeaderEntity> searchHeader(Long vdtNo, Date createDate) {
         try {
             List<HeaderEntity> result;
-            if ((vdtNo == null || vdtNo == 0) && ObjectUtils.isEmpty(createDate) ) {
+            if ((vdtNo == null || vdtNo == 0) && ObjectUtils.isEmpty(createDate)) {
                 throw new IllegalArgumentException("Please Enter field");
             }
 
@@ -144,14 +146,44 @@ public class TaxService {
     //delete detail
     @Transactional
     public void deleteDetail(Long detailId) {
-        DetailEntity detail = detailRepository.findById(detailId)
-                .orElseThrow(() -> new IllegalArgumentException("ไม่พบ detailId = " + detailId));
+        try {
+            DetailEntity detail = detailRepository.findById(detailId)
+                    .orElseThrow(() -> new IllegalArgumentException("ไม่พบ detailId = " + detailId));
 
-        HeaderEntity header = detail.getHeader();
-        if (!ObjectUtils.isEmpty(header)) {
-            header.getDetailEntityList().remove(detail);
+            HeaderEntity header = detail.getHeader();
+            if (!ObjectUtils.isEmpty(header)) {
+                header.getDetailEntityList().remove(detail);
+            }
+            detailRepository.delete(detail);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error while Deleting", e);
         }
-        detailRepository.delete(detail);
+    }
+
+    @Transactional
+    public byte[] generatePdf(PDFRequestDTO header) {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("vdtNo", header.getVdtNo());
+            params.put("vdtDate", header.getVdtDate());
+            params.put("printDate", new Date());
+
+            JRBeanCollectionDataSource dataSource =
+                    new JRBeanCollectionDataSource(header.getDetailEntityList());
+
+            InputStream reportInput = getClass().getClassLoader()
+                    .getResourceAsStream("report/Tax_report.jrxml");
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportInput);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
+
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error generating PDF", e);
+        }
     }
 
 

@@ -1,16 +1,18 @@
 package com.pcc.Tax_BE.Controller;
 
 import com.pcc.Tax_BE.DTO.DetailRequestDTO;
+import com.pcc.Tax_BE.DTO.PDFRequestDTO;
 import com.pcc.Tax_BE.Entity.HeaderEntity;
 import com.pcc.Tax_BE.Service.TaxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("tax-service")
@@ -60,4 +62,23 @@ public class TaxController {
                 "responseMessage", "Delete Detail complete"
         ));
     }
+
+    @PostMapping("/pdf")
+    public ResponseEntity<byte[]> generatePdf(@RequestBody PDFRequestDTO header) {
+        try {
+            byte[] pdfBytes = taxService.generatePdf(header);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.set("Content-Disposition", "inline; filename=report.pdf");
+
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+
 }
