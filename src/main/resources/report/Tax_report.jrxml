@@ -38,32 +38,32 @@
     <title>
         <band height="84" splitType="Stretch">
             <staticText>
-                <reportElement x="20" y="30" width="52" height="24" uuid="c75a8c3b-9eb8-42e0-aea8-8306ead9b5ca"/>
+                <reportElement x="0" y="30" width="70" height="40" uuid="c75a8c3b-9eb8-42e0-aea8-8306ead9b5ca"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <text><![CDATA[เลขใบสรุป]]></text>
             </staticText>
             <staticText>
-                <reportElement x="340" y="30" width="52" height="24" uuid="a02260a7-74d9-4fd4-8e36-e790ca1f6bbd"/>
+                <reportElement x="377" y="30" width="40" height="40" uuid="a02260a7-74d9-4fd4-8e36-e790ca1f6bbd"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <text><![CDATA[วันที่]]></text>
             </staticText>
             <textField isBlankWhenNull="true">
-                <reportElement x="392" y="30" width="100" height="24" uuid="b8653756-dfc2-4306-b3e0-329370447271"/>
+                <reportElement x="417" y="30" width="138" height="40" uuid="b8653756-dfc2-4306-b3e0-329370447271"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", new Locale("th", "TH")).format(
     new SimpleDateFormat("yyyy-MM-dd").parse($P{vdtDate})
 )]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="true">
-                <reportElement x="72" y="30" width="100" height="24" uuid="c999db71-9902-4d8b-9d58-2dee9a248942"/>
+                <reportElement x="70" y="30" width="150" height="40" uuid="c999db71-9902-4d8b-9d58-2dee9a248942"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$P{vdtNo} != null ? "ID000" + ($P{vdtNo}).toString() : null
 ]]></textFieldExpression>
@@ -290,6 +290,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="250" y="0" width="61" height="30" uuid="8031b34c-1395-4e3f-855c-80fef91d46a1">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="31d00d7a-cb33-4382-93b3-b006fb3a2b08"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -297,8 +298,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="TH SarabunPSK"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{totalPurchase})
 ]]></textFieldExpression>
@@ -306,6 +308,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="311" y="0" width="61" height="30" uuid="81e538e3-0fd0-43be-912b-eb0f6ce05a81">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f76e044-d046-49e7-abae-9bfad858b613"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -313,8 +316,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="TH SarabunPSK"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{taxS})
 ]]></textFieldExpression>
@@ -322,6 +326,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="372" y="0" width="61" height="30" uuid="952c29c0-64b0-4d5d-b8bf-b814e8627d0d">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd11922d-4327-4b22-9a98-34838c556fca"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -329,8 +334,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="TH SarabunPSK"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{vatBR})
 ]]></textFieldExpression>
@@ -338,6 +344,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="433" y="0" width="61" height="30" uuid="80142535-61ca-48e4-abb2-9d647275ca2d">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76cdd453-d478-47bb-b104-ffcd8630e02d"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -345,8 +352,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="TH SarabunPSK"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{vatBA})
 ]]></textFieldExpression>
@@ -354,6 +362,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="494" y="0" width="61" height="30" uuid="f339a301-7afb-49fe-af87-c1dfeda64cae">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="508ee5a7-a941-44f9-bd54-2b3f5552857b"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -361,8 +370,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="TH SarabunPSK"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{vatTB})
 ]]></textFieldExpression>
@@ -372,16 +382,16 @@
     <lastPageFooter>
         <band height="61">
             <staticText>
-                <reportElement x="388" y="20" width="52" height="24" uuid="4dee58c5-1934-44d8-a795-7e7cfea3a9a0"/>
+                <reportElement x="347" y="20" width="70" height="30" uuid="4dee58c5-1934-44d8-a795-7e7cfea3a9a0"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <text><![CDATA[วันที่พิมพ์]]></text>
             </staticText>
             <textField isBlankWhenNull="true">
-                <reportElement x="440" y="20" width="100" height="24" uuid="9b7ac035-ebc0-4aa8-9e6c-cc13f212f4cf"/>
+                <reportElement x="417" y="20" width="138" height="30" uuid="9b7ac035-ebc0-4aa8-9e6c-cc13f212f4cf"/>
                 <textElement>
-                    <font fontName="TH SarabunPSK" size="14" isBold="true"/>
+                    <font fontName="TH SarabunPSK" size="22" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", new Locale("th", "TH")).format($P{printDate})
 ]]></textFieldExpression>
@@ -409,6 +419,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="250" y="0" width="61" height="30" uuid="50f2bbc5-5e39-43ed-b621-1e26282c83b1">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="31d00d7a-cb33-4382-93b3-b006fb3a2b08"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -416,8 +427,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="8"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{sumTotalPurchase})
 ]]></textFieldExpression>
@@ -425,6 +437,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="311" y="0" width="61" height="30" uuid="83372e0f-82a5-49c2-adb9-02b1284f1318">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f76e044-d046-49e7-abae-9bfad858b613"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -432,8 +445,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="8"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{sumTaxS})
 ]]></textFieldExpression>
@@ -441,6 +455,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="372" y="0" width="61" height="30" uuid="c0c97cb2-f026-4635-8aa6-802ae6075989">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd11922d-4327-4b22-9a98-34838c556fca"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -448,8 +463,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="8"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{sumVatBR})
 ]]></textFieldExpression>
@@ -457,6 +473,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="433" y="0" width="61" height="30" uuid="e38523c9-6971-486e-bdaf-0a915fb8923d">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76cdd453-d478-47bb-b104-ffcd8630e02d"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -464,8 +481,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="8"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{sumVatBA})
 ]]></textFieldExpression>
@@ -473,6 +491,7 @@
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="494" y="0" width="61" height="30" uuid="4f415a53-46af-4f02-8138-ec0879103d34">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="508ee5a7-a941-44f9-bd54-2b3f5552857b"/>
+                    <property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
                 </reportElement>
                 <box>
                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -480,8 +499,9 @@
                     <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="8"/>
+                    <paragraph rightIndent="2"/>
                 </textElement>
                 <textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{sumVatTB})
 ]]></textFieldExpression>

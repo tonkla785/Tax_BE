@@ -115,7 +115,6 @@ public class TaxService {
     }
 
     //search
-    @Transactional
     public List<HeaderEntity> searchHeader(Long vdtNo, Date createDate) {
         try {
             List<HeaderEntity> result;
@@ -162,7 +161,7 @@ public class TaxService {
         }
     }
 
-    @Transactional
+    //pdf
     public byte[] generatePdf(PDFRequestDTO header) {
         try {
             Map<String, Object> params = new HashMap<>();
